@@ -12,7 +12,7 @@ namespace ConsoleApp5
     class Program
     {
         private static Person[] people = new Person[10000];
-        private static string path = @"C:\\Users\\valik\\source\\repos\\ConsoleApp3\\ConsoleApp3\\name.txt";
+        private static string path = @"C:\\Users\\valik\\source\\repos\\ConsoleApp5\\ConsoleApp5\\name.txt";
         
 
         static void Main(string[] args)
@@ -22,10 +22,33 @@ namespace ConsoleApp5
             stopwatch.Start();
             //sortOnAge();
             //bublesort(people);
-            selectSort(people);
+            //selectSort(people);
+            //Array.Sort(people);
+            shellSort(people, people.Length);
             stopwatch.Stop();
             time(stopwatch);
+            
             Console.ReadLine();
+        }
+        public static void shellSort(Person[] arr, int size) {
+            int increment = 8;
+            while (increment > 0)
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    int j = i;
+                    Person temp = arr[i];
+                    while ((j>=increment) && (arr[j-increment].Age > temp.Age))
+                    {
+                        arr[i] = arr[j - increment];
+                        j = j - increment;
+                    }
+                    arr[j] = temp;
+                }
+                if (increment > 1) increment = increment / 2;
+                else if (increment == 1) break;
+
+            }
         }
 
         public static void time(Stopwatch stopwatch) {
@@ -92,8 +115,9 @@ namespace ConsoleApp5
                     string text;
                     int i = 0;
                     Random random = new Random();
-                    while (i <= 9999 & ((text = stream.ReadLine()) != null))
+                    while (i <= people.Length-1 & ((text = stream.ReadLine()) != null))
                     {
+                        
                         masAdd(text.Split(' ')[0], text.Split(' ')[1], i, random.Next(16, 30), text.Split(' ')[2], i);
                         i++;
                     }
